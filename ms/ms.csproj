@@ -5,4 +5,10 @@
   </PropertyGroup>
 
 
+  <ItemGroup>
+    <None Remove="client\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="client\" />
+  </ItemGroup>
 </Project>
