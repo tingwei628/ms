@@ -3,7 +3,7 @@ WORKDIR ms
 
 # copy csproj file and restore
 COPY *.csproj ./
-RUN dotnet restore
+RUN dotnet restore -v diag
 
 # Copy everything else and build
 COPY . ./
