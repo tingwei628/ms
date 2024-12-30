@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,8 +41,15 @@ var app = builder.Build();
 //    app.UseSwaggerUI();
 
 //}
-app.UseSwagger();
-app.UseSwaggerUI();
+
+app.UseSwagger(c =>
+{
+    c.RouteTemplate = "ms/swagger/{documentname}/swagger.json";
+});
+app.UseSwaggerUI(c => {
+    c.RoutePrefix = "ms/swagger";
+    c.SwaggerEndpoint("/ms/swagger/v1/swagger.json", "API");
+});
 
 //app.UseHttpsRedirection();
 //app.UseStaticFiles();
