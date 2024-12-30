@@ -9,6 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+using ms;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 // config/secret for different env 
 
@@ -24,7 +28,14 @@ builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => {
+
+// only when deploying to kubernetes
+#if (DEBUG == false)
+    options.DocumentFilter<PathPrefixInsertDocumentFilter>("/ms");
+#endif
+
+});
 
 
 //// Add a custom scoped service.
@@ -40,15 +51,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-//app.UseSwagger(c =>
-//{
-//    c.RouteTemplate = "ms/swagger/{documentname}/swagger.json";
-//});
-//app.UseSwaggerUI(c => {
-//    c.RoutePrefix = "ms/swagger";
-//    c.SwaggerEndpoint("/ms/swagger/v1/swagger.json", "API");
-//});
 
 //app.UseHttpsRedirection();
 //app.UseStaticFiles();
