@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 
 # copy csproj file and restore
-COPY *.csproj ./
+COPY ms.csproj ./
 RUN dotnet restore
 
 # Copy everything else and build
