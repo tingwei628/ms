@@ -35,21 +35,20 @@ builder.Services.AddHealthChecks();
 var app = builder.Build();
 
 
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-
-//}
-
-app.UseSwagger(c =>
+if (app.Environment.IsDevelopment())
 {
-    c.RouteTemplate = "ms/swagger/{documentname}/swagger.json";
-});
-app.UseSwaggerUI(c => {
-    c.RoutePrefix = "ms/swagger";
-    c.SwaggerEndpoint("/ms/swagger/v1/swagger.json", "API");
-});
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+//app.UseSwagger(c =>
+//{
+//    c.RouteTemplate = "ms/swagger/{documentname}/swagger.json";
+//});
+//app.UseSwaggerUI(c => {
+//    c.RoutePrefix = "ms/swagger";
+//    c.SwaggerEndpoint("/ms/swagger/v1/swagger.json", "API");
+//});
 
 //app.UseHttpsRedirection();
 //app.UseStaticFiles();
