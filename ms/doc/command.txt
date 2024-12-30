@@ -1,8 +1,0 @@
-[build image]
-docker build -t ms . // same dir as Dockerfilem
-
-[run image]
-docker run -d -p 8080:5000 --name ms-container ms // container port:8080 
-
-docker images
-docker ps
