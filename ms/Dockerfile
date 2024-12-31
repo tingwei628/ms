@@ -12,7 +12,6 @@ RUN --mount=type=cache,target=/root/.nuget/packages \
     dotnet publish -c Release -o out \
     --runtime alpine-x64 \
     --self-contained true \
-    /p:PublishTrimmed=true \
     /p:PublishSingleFile=true
 
 
