@@ -10,13 +10,12 @@ COPY . ./
 # trim-self-contained and trimmed .NET build
 RUN --mount=type=cache,target=/root/.nuget/packages \
     dotnet publish -c Release -o out \
-    --runtime alpine-x64 \
     --self-contained true \
     /p:PublishSingleFile=true
 
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build /app/out .
 ENTRYPOINT ["dotnet", "ms.dll"]
