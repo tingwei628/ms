@@ -33,11 +33,13 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get repository name
-        id: repo_name
+        id: repo_names
         run: |
           echo "repo_name=$(basename $GITHUB_REPOSITORY)" >> $GITHUB_OUTPUT
 
       - name: Build Docker Image
+        env:
+          DOCKER_BUILDKIT: 1 # for build cache
         run: |
           docker build \
           -t ghcr.io/${{ github.repository_owner }}/${{ steps.repo_name.outputs.repo_name }}/${{ github.event.inputs.image_path }}:${{ github.event.inputs.image_tag }} \
