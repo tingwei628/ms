@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ms.Repositories;
 using ms.Services;
+using ms;
 using Npgsql;
 
 // config/secret for different env 
