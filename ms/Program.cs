@@ -10,9 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
-using ms;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using ms.Repositories;
+using ms.Services;
+using Npgsql;
 
 // config/secret for different env 
 
@@ -37,9 +37,21 @@ builder.Services.AddSwaggerGen(options => {
 
 });
 
+builder.Services.AddScoped(sp =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    var connectionString = configuration.GetConnectionString("PgCluster");
+    return new NpgsqlConnection(connectionString);
+});
 
-//// Add a custom scoped service.
-//builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+
+// Add a custom scoped service.
+// todo microservices
+// repo
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+// service
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddLogging();
 
 builder.Services.AddHealthChecks();
 
@@ -59,6 +71,13 @@ if (app.Environment.IsDevelopment())
 // CORS
 // Authentication
 // Authorization
+// sso/oidc/oauth2
+// traefik forwardauth authorization to .net 6 which implemented oidc
+//核心模組建議
+//用戶模組：用戶登入、註冊是電子商店的基礎。
+//商品模組：商品上架、查詢是商店的核心功能。
+//訂單模組：訂單生成、支付處理是營收的關鍵。
+//支付模組：整合金流服務，確保交易順暢。
 
 app.UseRouting();
 app.UseAuthorization();
