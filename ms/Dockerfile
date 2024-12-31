@@ -9,9 +9,7 @@ RUN --mount=type=cache,target=/root/.nuget/packages \
 COPY . ./
 # trim-self-contained and trimmed .NET build
 RUN --mount=type=cache,target=/root/.nuget/packages \
-    dotnet publish -c Release -o out \
-    --self-contained true \
-    /p:PublishSingleFile=true
+    dotnet publish -c Release -o out
 
 
 # Build runtime image
